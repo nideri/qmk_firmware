@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export PATH=/home/rasaf/bin/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.17.0.201812190825/tools/compiler/bin/:$PATH
+export PATH=$HOME/bin/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.linux64_1.17.0.201812190825/tools/compiler/bin/:$PATH
+
 
 echo -e "\n\n\n\n"
 echo "--------------------------------------------------------------------------------"
