@@ -19,6 +19,9 @@
 #if defined(EEPROM_EMU_STM32F303xC)
 #    define STM32F303xC
 #    include "stm32f3xx.h"
+#elif defined(EEPROM_EMU_STM32F303xE)
+#    define STM32F303xE
+#    include "stm32f3xx.h"
 #elif defined(EEPROM_EMU_STM32F103xB)
 #    define STM32F103xB
 #    include "stm32f1xx.h"

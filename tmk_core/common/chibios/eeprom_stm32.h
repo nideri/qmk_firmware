@@ -32,6 +32,8 @@
 // To Do. Work out correct value for EEPROM_PAGE_SIZE on the STM32F103CT6 etc
 #if defined(EEPROM_EMU_STM32F303xC)
 #    define MCU_STM32F303CC
+#elif defined(EEPROM_EMU_STM32F303xE)
+#    define MCU_STM32F303RE
 #elif defined(EEPROM_EMU_STM32F103xB)
 #    define MCU_STM32F103RB
 #elif defined(EEPROM_EMU_STM32F072xB)
@@ -44,7 +46,7 @@
 #    if defined(MCU_STM32F103RB)
 #        define FEE_PAGE_SIZE (uint16_t)0x400  // Page size = 1KByte
 #        define FEE_DENSITY_PAGES 2            // How many pages are used
-#    elif defined(MCU_STM32F103ZE) || defined(MCU_STM32F103RE) || defined(MCU_STM32F103RD) || defined(MCU_STM32F303CC) || defined(MCU_STM32F072CB)
+#    elif defined(MCU_STM32F103ZE) || defined(MCU_STM32F103RE) || defined(MCU_STM32F103RD) || defined(MCU_STM32F303CC) || defined(MCU_STM32F303RE) || defined(MCU_STM32F072CB)
 #        define FEE_PAGE_SIZE (uint16_t)0x800  // Page size = 2KByte
 #        define FEE_DENSITY_PAGES 4            // How many pages are used
 #    else
@@ -55,7 +57,7 @@
 #ifndef EEPROM_START_ADDRESS
 #    if defined(MCU_STM32F103RB) || defined(MCU_STM32F072CB)
 #        define FEE_MCU_FLASH_SIZE 128  // Size in Kb
-#    elif defined(MCU_STM32F103ZE) || defined(MCU_STM32F103RE)
+#    elif defined(MCU_STM32F103ZE) || defined(MCU_STM32F103RE) || defined(MCU_STM32F303RE)
 #        define FEE_MCU_FLASH_SIZE 512  // Size in Kb
 #    elif defined(MCU_STM32F103RD)
 #        define FEE_MCU_FLASH_SIZE 384  // Size in Kb

@@ -18,7 +18,8 @@ MCU_SERIES = STM32F3xx
 # Linker script to use
 # - it should exist either in <chibios>/os/common/ports/ARMCMx/compilers/GCC/ld/
 #   or <this_dir>/ld/
-MCU_LDSCRIPT = STM32F303xC
+#MCU_LDSCRIPT = STM32F303xC
+MCU_LDSCRIPT = STM32F303xE
 
 # Startup code to use
 #  - it should exist in <chibios>/os/common/startup/ARMCMx/compilers/GCC/mk/
@@ -26,7 +27,11 @@ MCU_STARTUP = stm32f3xx
 
 # Board: it should exist either in <chibios>/os/hal/boards/
 #  or <this_dir>/boards
-BOARD = GENERIC_STM32_F303XC
+#BOARD = GENERIC_STM32_F303XC
+# this was created by myself (copied and adapted from GENERIC_STM32_F303XC) (seems to work)
+#BOARD = GENERIC_STM32_F303XE
+# this was already here (<chibios>/os/hal/boards/) (seems to work)
+BOARD = ST_NUCLEO64_F303RE
 
 # Cortex version
 MCU  = cortex-m4
