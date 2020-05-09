@@ -9,17 +9,18 @@ export PATH=$MY_ARM_ROOT/tools/compiler/bin/:$PATH
 
 make clean
 
-make ckeys/handwire_101:default CTPC=yes
-#thedora does not work out of the box with nucleo-f303re
-#make ckeys/thedora:default
+#make ckeys/handwire_101:default CTPC=yes
+make 1upkeyboards/sweet16/v2/proton_c:default
+#make handwired/onekey/proton_c:default 
+
 
 st-flash erase
 
-st-flash write .build/ckeys_handwire_101_default_proton_c.bin 0x8000000
-#thedoa does not work out of the box with nucleo-f303re
-#st-flash write .build/ckeys_thedora_default.bin 0x8000000
+st-flash write .build/*.bin 0x8000000
 
 st-flash reset
+
+exit 1
 
 echo -e "\n"
 echo "--------------------------------------------------------------------------------"

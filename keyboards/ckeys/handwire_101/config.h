@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
 */
-// check config_common.h  A0  A1  A0  B8  
+// check config_common.h  B0  A1  A0  B8  
 #define MATRIX_ROW_PINS { B5, F5, F6, F7 }
 // check config_common.h  B5  B4  B3  B2  
 #define MATRIX_COL_PINS { D4, C6, D7, E6 }

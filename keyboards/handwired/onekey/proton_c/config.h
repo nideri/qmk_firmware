@@ -18,8 +18,8 @@
 
 #include "config_common.h"
 
-#define MATRIX_COL_PINS { A2 }
-#define MATRIX_ROW_PINS { A1 }
+#define MATRIX_COL_PINS { B0 }
+#define MATRIX_ROW_PINS { B3 }
 #define UNUSED_PINS
 
 #define BACKLIGHT_PIN           B8
