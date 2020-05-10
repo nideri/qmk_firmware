@@ -96,6 +96,7 @@ ifneq ($(findstring STM32F303, $(MCU)),)
   # Linker script to use
   # - it should exist either in <chibios>/os/common/ports/ARMCMx/compilers/GCC/ld/
   #   or <keyboard_dir>/ld/
+# overwrite this (keyboards) rules.mk for my own STM32F303RE
   MCU_LDSCRIPT ?= STM32F303xC
 
   # Startup code to use
@@ -104,6 +105,7 @@ ifneq ($(findstring STM32F303, $(MCU)),)
 
   # Board: it should exist either in <chibios>/os/hal/boards/,
   # <keyboard_dir>/boards/, or drivers/boards/
+# overwrite this in (keyboards) rules.mk for my own STM32F303RE
   BOARD ?= GENERIC_STM32_F303XC
 
   USE_FPU ?= yes
