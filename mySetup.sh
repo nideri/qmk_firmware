@@ -20,7 +20,7 @@ st-flash write .build/*.bin 0x8000000
 
 st-flash reset
 
-exit 1
+#exit 1
 
 echo -e "\n"
 echo "--------------------------------------------------------------------------------"
@@ -40,7 +40,7 @@ echo "$MY_OPENOCD_ROOT/tools/openocd/bin/openocd -f 'debug.cfg' -s $HOME/kbrd/qm
 
 echo "--------------------------------------------------------------------------------"
 echo "gdb:"
-echo "$MY_ARM_ROOT/tools/compiler/bin/arm-none-eabi-gdb  -iex 'add-auto-load-safe-path /' -iex 'file .build/ckeys_handwire_101_default_proton_c.elf'"
+echo "$MY_ARM_ROOT/tools/compiler/bin/arm-none-eabi-gdb  -iex 'add-auto-load-safe-path /' -iex 'file .build/1upkeyboards_sweet16_v2_proton_c_default.elf'"
 
 echo "--------------------------------------------------------------------------------"
 

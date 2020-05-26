@@ -18,6 +18,8 @@ AUDIO_ENABLE = yes
 # connect display (128x64) I2C SCL to PB6 and SDA to PB7
 OLED_DRIVER_ENABLE = yes
 
-#BACKLIGHT_ENABLE = yes
-#BACKLIGHT_DRIVER = software
+
+
+RGBLIGHT_ENABLE = yes
+WS2812_DRIVER = tim_spi
 

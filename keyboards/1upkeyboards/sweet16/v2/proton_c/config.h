@@ -11,25 +11,16 @@
 #define AUDIO_CLICKY
 
 /* key matrix pins */
-#define MATRIX_ROW_PINS { B0, A1, A0, B8 }
-#define MATRIX_COL_PINS { B5, B4, B3, B2 }
+#define MATRIX_ROW_PINS { B0, C1, A0, A1 }
+#define MATRIX_COL_PINS { B5, B4, B3, A10 }
 #define UNUSED_PINS
 
 /* COL2ROW or ROW2COL */
-#define DIODE_DIRECTION ROW2COL
+#define DIODE_DIRECTION COL2ROW
 
-/*
-// https://docs.qmk.fm/#/feature_backlight?id=arm-configuration
-//#define BACKLIGHT_BREATHING
-#define BACKLIGHT_PIN B7
-#define BACKLIGHT_PWM_DRIVER PWMD4
-#define BACKLIGHT_PWM_CHANNEL 3
-#define BACKLIGHT_PAL_MODE 2
-*/
+#define RGBLIGHT_ANIMATIONS
+// enable spi3 tim4 tim8 in quantum/stm32/mcuconf.h
+#define HAL_USE_SPI TRUE
+#define RGBLED_NUM 	7
 
 
-
-/* Encoder pins */
-//#define ENCODERS_PAD_A { A2 }
-//#define ENCODERS_PAD_B { A1 }
-//#define ENCODER_RESOLUTION 4
