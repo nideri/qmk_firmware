@@ -163,12 +163,12 @@ uint8_t frame_buf[NOF_LEDS*3];
 
 void ws2812_init(LED_TYPE* ledarray, uint16_t leds) {
 	
-  /*
+  
 	  // init frame buf
 	  for (uint16_t i=0; i<NOF_LEDS*3; i++) {
 		  frame_buf[i]=0;
 	  }
-
+	  /*
 	  // led beim stecker
 
 	  frame_buf[0]=0x0f; // g
@@ -265,7 +265,7 @@ init dma
 	    SPI_DMA->CCR = SPI_DMA_CCR;
 	    SPI_DMA->CNDTR = NOF_LEDS*3;//sizeof(frame_buf); // 0x9;
 	    SPI_DMA->CPAR = (uint32_t)&(WS2812_SPI->DR); // adr of spi tx buf
-	    SPI_DMA->CMAR = (uint32_t)ledarray;//frame_buf;
+	    SPI_DMA->CMAR = (uint32_t)frame_buf;//ledarray;//frame_buf;
 	    SPI_DMA->CCR |= 0x00000001; /* set enable */
 /*
 	    uint32_t adr = &(WS2812_SPI->DR);
@@ -302,6 +302,34 @@ void ws2812_setleds(LED_TYPE* ledarray, uint16_t leds) {
     if (!s_init) {
         ws2812_init( ledarray,  leds);
         s_init = true;
+    }
+
+#define I_STDBY_IN_uA (919L)
+#define I_DIGIT_IN_uA (52L)
+#define I_MAX_IN_uA (200000L) /* max. current in uA (target) */
+
+#define I_MAX_IN_uA_MEASURED (I_MAX_IN_uA) /* max. current in uA measured) */
+#define I_ERROR ((float)I_MAX_IN_uA_MEASURED/(float)I_MAX_IN_uA) /* relative error */
+#define I_MAX_IN_uA_WITH_ERROR ((uint32_t)((float)I_MAX_IN_uA/I_ERROR))
+    
+    
+    uint32_t current = I_STDBY_IN_uA*leds;
+    uint16_t i=0;
+    while (i<leds) {
+      
+      current += (ledarray[i].g+ledarray[i].r+ledarray[i].b+3)*I_DIGIT_IN_uA;
+
+      if (current < I_MAX_IN_uA_WITH_ERROR) { //_uA_WITH_ERROR) {
+	frame_buf[i*3+0] = ledarray[i].g;
+	frame_buf[i*3+1] = ledarray[i].r;
+	frame_buf[i*3+2] = ledarray[i].b;
+      } else {
+	frame_buf[i*3+0] = 0;
+	frame_buf[i*3+1] = 0;
+	frame_buf[i*3+2] = 0;	
+      }
+
+      i++;
     }
     /*
     for (uint16_t i = 0; i < leds && i < NOF_LEDS; i++) {

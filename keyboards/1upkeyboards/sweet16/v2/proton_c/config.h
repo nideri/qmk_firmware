@@ -21,6 +21,6 @@
 #define RGBLIGHT_ANIMATIONS
 // enable spi3 tim4 tim8 in quantum/stm32/mcuconf.h
 #define HAL_USE_SPI TRUE
-#define RGBLED_NUM 	7
+#define RGBLED_NUM 	144
 
 
