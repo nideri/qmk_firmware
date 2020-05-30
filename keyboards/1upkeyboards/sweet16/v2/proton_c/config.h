@@ -11,8 +11,8 @@
 #define AUDIO_CLICKY
 
 /* key matrix pins */
-#define MATRIX_ROW_PINS { B0, C1, A0, A1 }
-#define MATRIX_COL_PINS { B5, B4, B3, A10 }
+#define MATRIX_ROW_PINS { /* r0 */ F1, A1, C3, A0, A13, A15 /* r5 */ }
+#define MATRIX_COL_PINS { /* c0 */ A10, C4, B3, B5, B13, B4, B14, B10, B15, A8, B1, A9, B2, C7, C9, C8, B8, C6 /* c17 */ }
 #define UNUSED_PINS
 
 /* COL2ROW or ROW2COL */

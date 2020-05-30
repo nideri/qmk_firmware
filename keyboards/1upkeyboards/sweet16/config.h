@@ -9,8 +9,8 @@
 #define DESCRIPTION     4x4 grid
 
 /* key matrix size */
-#define MATRIX_ROWS 4
-#define MATRIX_COLS 4
+#define MATRIX_ROWS 6
+#define MATRIX_COLS 18
 
 /* number of backlight levels */
 #define BACKLIGHT_LEVELS 10
