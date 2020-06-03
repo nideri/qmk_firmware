@@ -296,7 +296,8 @@ everyting is armed, start master timer
   return;
 }
 
-
+extern uint8_t key_led[MATRIX_ROWS*MATRIX_COLS];
+		
 void ws2812_setleds(LED_TYPE* ledarray, uint16_t leds) {
     static bool s_init = false;
     if (!s_init) {
@@ -311,18 +312,30 @@ void ws2812_setleds(LED_TYPE* ledarray, uint16_t leds) {
 #define I_MAX_IN_uA_MEASURED (I_MAX_IN_uA) /* max. current in uA measured) */
 #define I_ERROR ((float)I_MAX_IN_uA_MEASURED/(float)I_MAX_IN_uA) /* relative error */
 #define I_MAX_IN_uA_WITH_ERROR ((uint32_t)((float)I_MAX_IN_uA/I_ERROR))
-    
+
     
     uint32_t current = I_STDBY_IN_uA*leds;
     uint16_t i=0;
     while (i<leds) {
-      
-      current += (ledarray[i].g+ledarray[i].r+ledarray[i].b+3)*I_DIGIT_IN_uA;
 
+#ifdef QMK_RGB      
+      current += (ledarray[i].g+ledarray[i].r+ledarray[i].b+3)*I_DIGIT_IN_uA;
+#else
+      current += 2*key_led[i]*I_DIGIT_IN_uA;
+#endif
+      
       if (current < I_MAX_IN_uA_WITH_ERROR) { //_uA_WITH_ERROR) {
+#ifdef QMK_RGB	
 	frame_buf[i*3+0] = ledarray[i].g;
 	frame_buf[i*3+1] = ledarray[i].r;
 	frame_buf[i*3+2] = ledarray[i].b;
+#else
+	if (i < MATRIX_ROWS*MATRIX_COLS) {
+	  //	  frame_buf[i*3+0] = key_led[i]; // g
+	  //	  frame_buf[i*3+1] = key_led[i]; // r
+	  frame_buf[i*3+2] = key_led[i]; // b
+	}
+#endif	
       } else {
 	frame_buf[i*3+0] = 0;
 	frame_buf[i*3+1] = 0;

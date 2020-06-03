@@ -1,8 +1,14 @@
 #include QMK_KEYBOARD_H
 
+uint8_t key_led[MATRIX_ROWS*MATRIX_COLS] = {0};
+
 enum custom_keycodes {
-  UP_URL = SAFE_RANGE
+  MY_MUTE = SAFE_RANGE
 };
+
+#define _BL 0
+#define _FL 1
+#define _ML 2
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if 0							      
@@ -24,28 +30,113 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                              KC_LALT,                     KC_SPACE,                              KC_RALT,                           KC_KP_0,                    KC_KP_DOT,         KC_KP_ENTER
 		     )
     #else
-    LAYOUT_ortho_4x4(
-		     KC_ESC,    KC_F1,       KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9,    KC_F10, KC_F11,    KC_F12,                   KC_PSCREEN, KC_PAUSE,       KC_END,            KC_HELP,
-		     KC_GRAVE,  KC_1,        KC_2,  KC_3,  KC_4,  KC_5,  KC_6,  KC_7,  KC_8,  KC_9,     KC_0,   KC_MINUS,  KC_EQUAL,    KC_BSPACE,   RGB_TOG,    KC_LOCKING_NUM, KC_LOCKING_SCROLL, KC_KP_SLASH,
-/* FUNCTION KEY -> */KC_NO,     KC_TAB,      KC_Q,  KC_W,  KC_E,  KC_R,  KC_T,  KC_Y,  KC_U,  KC_I,     KC_O,   KC_P,      KC_LBRACKET, KC_RBRACKET, RGB_MOD,    RGB_VAI,        RGB_SAI,           KC_KP_ASTERISK,
-		     KC_LCTRL,  KC_CAPSLOCK, KC_A,  KC_S,  KC_D,  KC_F,  KC_G,  KC_H,  KC_J,  KC_K,     KC_L,   KC_SCOLON, KC_QUOTE,    KC_BSLASH,   RGB_HUD,    RGB_M_P,        RGB_HUI,           KC_KP_MINUS,
-		     KC_LSHIFT, KC_LGUI,     KC_Z,  KC_X,  KC_C,  KC_V,  KC_B,  KC_N,  KC_M,  KC_COMMA, KC_DOT, KC_SLASH,  KC_RSHIFT,   KC_ENTER,    RGB_RMOD,   RGB_VAD,        RGB_SAD,           MU_TOG,
-		                              KC_LALT,                     KC_SPACE,                              KC_RALT,                           KC_KP_0,                    KC_KP_DOT,         AU_TOG
-		     )
+        [_BL] = LAYOUT_ortho_4x4(
+		     KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12  ,          KC_PSCR, KC_PAUS, KC_END , KC_HELP,
+		     KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQUAL, KC_BSPC, RGB_TOG, KC_LNUM, KC_LSCR, AU_TOG ,
+                     MO(_FL), KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_LBRC , KC_RBRC, RGB_MOD, RGB_VAI, RGB_SAI, CK_TOGG,
+		     KC_LCTL, KC_LCTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOTE, KC_BSLS, RGB_HUD, RGB_M_P, RGB_HUI, MU_TOG ,
+		     KC_LSFT, KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT , KC_ENT , RGB_RMOD,RGB_VAD, RGB_SAD, MU_MOD ,
+		                         KC_LALT,                     KC_SPC,                                              KC_RALT,                 KC_KP_0,          KC_DEL , AU_OFF 
+			     ),
+        [_FL] = LAYOUT_ortho_4x4(
+		     EEP_RST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,          _______, _______, _______, _______,
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, DM_REC1,
+                     _______, MO(_ML), MY_MUTE, KC_LGUI, _______, _______, _______, _______, KC_PGUP, KC_UP  , _______, _______,  _______, _______, _______, KC_VOLU, _______, DM_REC2,
+		     KC_CAPS, KC_CAPS, _______, KC_SLEP, KC_DEL , _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END ,  KC_END , _______, KC_MPRV, KC_MPLY, KC_MNXT, DM_PLY1,
+		     _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGDN, _______, _______, _______,  _______, _______, _______, KC_VOLD, _______, DM_PLY2,
+		                         _______,                     _______,                                             _______,                 KC_MUTE,          _______, DM_RSTP
+			     ),
+        [_ML] = LAYOUT_ortho_4x4(
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,          _______, _______, _______, _______,
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
+                     _______, _______, _______, _______, _______, _______, _______, _______, KC_WH_U, KC_MS_U, KC_WH_D, _______,  _______, _______, _______, _______, _______, _______,
+		     _______, _______, MY_MUTE, _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,  _______, _______, _______, _______, _______, _______,
+		     _______, _______, _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN3, KC_BTN2, _______,  _______, _______, _______, _______, _______, _______,
+		                         _______,                     KC_BTN1,                                             KC_BTN2,                 _______,          _______, _______
+			     )
     #endif
 #endif    
 };
 
+/*
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,          _______, _______, _______, _______,
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
+                     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
+		                         _______,                     _______,                                             _______,                ________,          _______, _______
+ */
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+    char buf[10];
+
+    static uint8_t my_static_layer = _BL;
+    uint8_t my_layer = 0;
+    static uint8_t my_mute = 0;
+    
+    sprintf(buf,"   ", layer_state);
     switch (keycode) {
-        case UP_URL:
+      #if 1
+        case MY_MUTE:
             if (record->event.pressed) {
-                SEND_STRING("http://1upkeyboards.com");
-            }
-            return false;
+	      my_mute = 1; 
+            } else {
+	      my_mute = 0;
+	    }
             break;
+      #endif
+      case MO(_FL):
+        if (record->event.pressed) {
+	  my_static_layer |= (1<<_FL);
+          sprintf(buf,"_FL", layer_state); // overwrite buf
+        } else {
+	  my_static_layer &= ~(1<<_FL);
+	}
+        break;
+      case MO(_ML):
+        if (record->event.pressed) {
+	  my_static_layer |= (1<<_ML);
+          sprintf(buf,"_ML", layer_state); // overwrite buf
+        } else {
+	  my_static_layer &= ~(1<<_ML);
+	}
+        break;
     }
-    return true;
+
+    sprintf(buf,"%s %02x", buf, layer_state);
+    oled_write_P(buf, false);
+
+    /* show active keys */
+    if ((my_static_layer & (1<<_ML)) == (1<<_ML)) {
+      my_layer = _ML;
+    } else if ((my_static_layer & (1<<_FL)) == (1<<_FL)) {
+      my_layer = _FL;
+    } else {
+      my_layer = _BL;
+    }
+    
+    for (uint8_t m=0; m<MATRIX_ROWS; m++) {
+      for (uint8_t n=0; n<MATRIX_COLS; n++) {
+	if (keymaps[my_layer][m][n] != _______) {
+          key_led[m*MATRIX_COLS+n] = 1;
+	} else {
+          key_led[m*MATRIX_COLS+n] = 0;
+	}
+      }
+    }
+
+    /* show help text when key is pressed and MY_MUTE is active */
+    if (my_mute != 0) {
+      sprintf(buf," %04x", keycode);
+      oled_write_P(buf, false);
+      return false;
+    } else {
+      sprintf(buf,"     ", keycode);
+      oled_write_P(buf, false);
+      return true;
+    }
 }
 
 #ifdef ENCODER_ENABLE
@@ -101,7 +192,7 @@ void oled_task_user(void) {
   led_t led_state = host_keyboard_led_state();
   oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
   oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
-  oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+  //oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
 }
 
 
