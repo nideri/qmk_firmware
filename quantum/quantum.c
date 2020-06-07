@@ -184,6 +184,7 @@ void post_process_record_quantum(keyrecord_t *record) {
 /* Core keycode function, hands off handling to other functions,
     then processes internal quantum keycodes, and then processes
     ACTIONs.                                                      */
+/* 2020-06-07 mui - is this the right place to catch special keys e.g. RGB_... to dispaly key_help? */
 bool process_record_quantum(keyrecord_t *record) {
     uint16_t keycode = get_record_keycode(record, true);
 
@@ -216,6 +217,7 @@ bool process_record_quantum(keyrecord_t *record) {
             // Must run first to be able to mask key_up events.
             process_key_lock(&keycode, record) &&
 #endif
+            process_record_kb(keycode, record) && /* 2020-06-07 mui - put here... */
 #if defined(DYNAMIC_MACRO_ENABLE) && !defined(DYNAMIC_MACRO_USER_CALL)
             // Must run asap to ensure all keypresses are recorded.
             process_dynamic_macro(keycode, record) &&
@@ -232,7 +234,7 @@ bool process_record_quantum(keyrecord_t *record) {
 #if defined(VIA_ENABLE)
             process_record_via(keycode, record) &&
 #endif
-            process_record_kb(keycode, record) &&
+	    //            process_record_kb(keycode, record) && /* 2020-06-07 mui - ... from here */
 #if defined(MIDI_ENABLE) && defined(MIDI_ADVANCED)
             process_midi(keycode, record) &&
 #endif

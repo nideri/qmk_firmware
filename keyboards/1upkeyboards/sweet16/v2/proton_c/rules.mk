@@ -24,3 +24,6 @@ RGBLIGHT_ENABLE = yes
 WS2812_DRIVER = tim_spi
 
 DYNAMIC_MACRO_ENABLE = yes
+
+# do not use flash of uc
+EEPROM_DRIVER = i2c

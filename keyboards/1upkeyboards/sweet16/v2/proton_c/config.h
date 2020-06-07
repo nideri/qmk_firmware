@@ -24,3 +24,8 @@
 #define RGBLED_NUM 	144
 
 
+/* i2c eeprom */
+#define EXTERNAL_EEPROM_I2C_BASE_ADDRESS  (0b10100110)
+
+/* size of keyboard macro buffer */
+#define DYNAMIC_MACRO_SIZE 	(512)
