@@ -406,21 +406,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     uint8_t my_layer = 0;
 char help_buf[30];
+    uint8_t my_mute = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     static uint8_t my_static_layer = _BL;
-    static uint8_t my_mute = 0;
+    uint8_t overwrite_mute = 0;
     
 
     switch (keycode) {
       #if 1
         case MY_MUTE:
             if (record->event.pressed) {
-	      my_mute = 1; 
-            } else {
+	      my_mute ^= 0x01; 
+            } /*else {
 	      my_mute = 0;
-	    }
+	      }*/
             break;
       #endif
       case MO(_FL):
@@ -429,6 +430,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
 	  my_static_layer &= ~(1<<_FL);
 	}
+	overwrite_mute = 1;
         break;
       case MO(_ML):
         if (record->event.pressed) {
@@ -436,8 +438,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
 	  my_static_layer &= ~(1<<_ML);
 	}
+	overwrite_mute = 1;
         break;
-	
+		
     }
 
 
@@ -453,8 +456,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     
     for (uint8_t m=0; m<MATRIX_ROWS; m++) {
       for (uint8_t n=0; n<MATRIX_COLS; n++) {
-	if (keymaps[my_layer][m][n] != _______) {
-          key_led[m*MATRIX_COLS+n] = 1;
+	if (keymaps[my_layer][m][n] == MO(_FL) || keymaps[my_layer][m][n] == MO(_ML)) {
+	  key_led[m*MATRIX_COLS+n] = 3; // g+r = yellow (to highlight function keys)
+	} else if (keymaps[my_layer][m][n] != _______) {
+          key_led[m*MATRIX_COLS+n] = 4; // b = blue
 	} else {
           key_led[m*MATRIX_COLS+n] = 0;
 	}
@@ -463,7 +468,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     
     
     /* show help text when key is pressed and MY_MUTE is active */
-    if (my_mute != 0) {
+    if (my_mute != 0 && overwrite_mute == 0) {
       if (IS_ANY(keycode)) {
 	sprintf(help_buf,"%s\n", key_help[keycode]);
       } else {
@@ -488,10 +493,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	}
 	
       }
-      return false;
+      return false; // do not further process keycode
     } else {
       sprintf(help_buf,"\n", keycode);
-      return true;
+      return true; // do further processing
     }
 }
 
@@ -543,7 +548,7 @@ void oled_task_user(void) {
             oled_write_ln_P(PSTR("Undefined"), false);
     }
   */
-  if (my_layer == _BL) {
+  if (my_layer == _BL && my_mute == 0) {
     render_logo();
   } else {
     sprintf(buf,"\nLayer: %s\n%s", layer_help[my_layer], help_buf);
