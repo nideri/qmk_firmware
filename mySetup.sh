@@ -10,10 +10,10 @@ export PATH=$MY_ARM_ROOT/tools/compiler/bin/:$PATH
 make clean
 
 #make ckeys/handwire_101:default CTPC=yes
-make 1upkeyboards/sweet16/v2/proton_c:default:dfu-util
+make 1upkeyboards/sweet16/v2/proton_c:default #:dfu-util
 #make handwired/onekey/proton_c:default 
 
-exit 0
+#exit 0
 
 st-flash erase
 

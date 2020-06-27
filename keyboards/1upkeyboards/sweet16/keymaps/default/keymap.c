@@ -373,15 +373,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                      MO(_FL), KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_LBRC , KC_RBRC, RGB_MOD, RGB_VAI, RGB_SAI, CK_TOGG,
 		     KC_LCTL, KC_LCTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOTE, KC_BSLS, RGB_HUD, RGB_M_P, RGB_HUI, MU_TOG ,
 		     KC_LSFT, KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT , KC_ENT , RGB_RMOD,RGB_VAD, RGB_SAD, MU_MOD ,
-		                         KC_LALT,                     KC_SPC,                                              KC_RALT,                 KC_KP_0,          KC_DEL , AU_OFF 
+		                         KC_LALT,                     KC_SPC ,                                             KC_RALT,                 KC_KP_0,          KC_DEL , AU_OFF 
 			     ),
         [_FL] = LAYOUT_ortho_4x4(
 		     EEP_RST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,          _______, _______, _______, _______,
-		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, DM_REC1,
-                     _______, MO(_ML), MY_MUTE, KC_LGUI, _______, _______, _______, _______, KC_PGUP, KC_UP  , _______, _______,  _______, _______, _______, KC_VOLU, _______, DM_REC2,
-		     KC_CAPS, KC_CAPS, _______, KC_SLEP, KC_DEL , _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END ,  KC_END , _______, KC_MPRV, KC_MPLY, KC_MNXT, DM_PLY1,
-		     _______, _______, _______, _______, _______, _______, _______, KC_PGDN, KC_PGDN, _______, _______, _______,  _______, _______, _______, KC_VOLD, _______, DM_PLY2,
-		                         MY_CAD ,                     _______,                                             _______,                 KC_MUTE,          _______, DM_RSTP
+		     KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12  , KC_DEL , _______, _______, _______, DM_REC1,
+                     _______, MO(_ML), MY_MUTE, KC_LGUI, _______, RESET  , _______, _______, KC_PGUP, KC_UP  , _______, _______,  _______, _______, _______, KC_VOLU, _______, DM_REC2,
+		     _______, KC_CAPS, _______, KC_SLEP, KC_DEL , _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END ,  KC_END , _______, KC_MPRV, KC_MPLY, KC_MNXT, DM_PLY1,
+		     _______, _______, _______, _______, MY_CAD , _______, _______, KC_PGDN, KC_PGDN, _______, _______, _______,  _______, _______, _______, KC_VOLD, _______, DM_PLY2,
+		                         _______,                     _______,                                             _______,                 KC_MUTE,          _______, DM_RSTP
 			     ),
         [_ML] = LAYOUT_ortho_4x4(
 		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,          _______, _______, _______, _______,
