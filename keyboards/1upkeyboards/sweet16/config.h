@@ -20,3 +20,7 @@
 
 /* Locking resynchronize hack */
 #define LOCKING_RESYNC_ENABLE
+
+
+/* layer tap-toggle */
+#define TAPPING_TOGGLE (2)

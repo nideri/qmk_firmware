@@ -370,15 +370,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         [_BL] = LAYOUT_ortho_4x4(
 		     KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12  ,          KC_PSCR, KC_PAUS, KC_END , KC_HELP,
 		     KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQUAL, KC_BSPC, RGB_TOG, KC_LNUM, KC_LSCR, AU_TOG ,
-                     MO(_FL), KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_LBRC , KC_RBRC, RGB_MOD, RGB_VAI, RGB_SAI, CK_TOGG,
+                     TT(_FL), KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_LBRC , KC_RBRC, RGB_MOD, RGB_VAI, RGB_SAI, CK_TOGG,
 		     KC_LCTL, KC_LCTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOTE, KC_BSLS, RGB_HUD, RGB_M_P, RGB_HUI, MU_TOG ,
 		     KC_LSFT, KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT , KC_ENT , RGB_RMOD,RGB_VAD, RGB_SAD, MU_MOD ,
 		                         KC_LALT,                     KC_SPC ,                                             KC_RALT,                 KC_KP_0,          KC_DEL , AU_OFF 
 			     ),
         [_FL] = LAYOUT_ortho_4x4(
 		     EEP_RST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,          _______, _______, _______, _______,
-		     KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12  , KC_DEL , _______, _______, _______, DM_REC1,
-                     _______, MO(_ML), MY_MUTE, KC_LGUI, _______, RESET  , _______, _______, KC_PGUP, KC_UP  , _______, _______,  _______, _______, _______, KC_VOLU, _______, DM_REC2,
+		     KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12  , _______, _______, _______, _______, DM_REC1,
+                     _______, TT(_ML), MY_MUTE, KC_LGUI, _______, RESET  , _______, _______, KC_PGUP, KC_UP  , _______, _______,  _______, KC_DEL , _______, KC_VOLU, _______, DM_REC2,
 		     _______, KC_CAPS, _______, KC_SLEP, KC_DEL , _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END ,  KC_END , _______, KC_MPRV, KC_MPLY, KC_MNXT, DM_PLY1,
 		     _______, _______, _______, _______, MY_CAD , _______, _______, KC_PGDN, KC_PGDN, _______, _______, _______,  _______, _______, _______, KC_VOLD, _______, DM_PLY2,
 		                         _______,                     _______,                                             _______,                 KC_MUTE,          _______, DM_RSTP
@@ -404,100 +404,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                         _______,                     _______,                                             _______,                ________,          _______, _______
  */
 
-    uint8_t my_layer = 0;
-char help_buf[30];
-    uint8_t my_mute = 0;
+
+
+    uint8_t mute_key = 0;
+
+uint16_t last_keycode = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-    static uint8_t my_static_layer = _BL;
-    uint8_t overwrite_mute = 0;
+  last_keycode = keycode;
     
+  uint8_t ignore_mute = 0;
 
     switch (keycode) {
       #if 1
         case MY_MUTE:
             if (record->event.pressed) {
-	      my_mute ^= 0x01; 
+	      mute_key ^= 0x01; 
             } /*else {
-	      my_mute = 0;
+	      mute_key = 0;
 	      }*/
             break;
       #endif
-      case MO(_FL):
-        if (record->event.pressed) {
-	  my_static_layer |= (1<<_FL);
-        } else {
-	  my_static_layer &= ~(1<<_FL);
-	}
-	overwrite_mute = 1;
+      case TT(_FL):
+	ignore_mute = 1;
         break;
-      case MO(_ML):
-        if (record->event.pressed) {
-	  my_static_layer |= (1<<_ML);
-        } else {
-	  my_static_layer &= ~(1<<_ML);
-	}
-	overwrite_mute = 1;
+      case TT(_ML):
+	ignore_mute = 1;
         break;
 		
     }
-
-
-
-    /* show active keys */
-    if ((my_static_layer & (1<<_ML)) == (1<<_ML)) {
-      my_layer = _ML;
-    } else if ((my_static_layer & (1<<_FL)) == (1<<_FL)) {
-      my_layer = _FL;
-    } else {
-      my_layer = _BL;
-    }
-    
-    for (uint8_t m=0; m<MATRIX_ROWS; m++) {
-      for (uint8_t n=0; n<MATRIX_COLS; n++) {
-	if (keymaps[my_layer][m][n] == MO(_FL) || keymaps[my_layer][m][n] == MO(_ML)) {
-	  key_led[m*MATRIX_COLS+n] = 3; // g+r = yellow (to highlight function keys)
-	} else if (keymaps[my_layer][m][n] != _______) {
-          key_led[m*MATRIX_COLS+n] = 4; // b = blue
-	} else {
-          key_led[m*MATRIX_COLS+n] = 0;
-	}
-      }
-    }
-    
     
     /* show help text when key is pressed and MY_MUTE is active */
-    if (my_mute != 0 && overwrite_mute == 0) {
-      if (IS_ANY(keycode)) {
-	sprintf(help_buf,"%s\n", key_help[keycode]);
-      } else {
-	switch (keycode) {
-	  case AU_TOG:
-	    sprintf(help_buf,"AU_TOG\n");
-	    break;
-	  case DM_REC1:
-	    sprintf(help_buf,"DM_REC1\n");
-	    break;
-	  case DM_PLY1:
-	    sprintf(help_buf,"DM_PLY1\n");
-	    break;
-	  case DM_RSTP:
-	    sprintf(help_buf,"DM_RSTP\n");
-	    break;
-	  case MY_CAD:
-	    sprintf(help_buf,"Ctrl+Alt+Del\n");
-	    break;
-          default:
-	    sprintf(help_buf,"UNKWN (%04Xh)\n", keycode);
-	}
-	
-      }
+    if (mute_key != 0 && ignore_mute == 0) {
       return false; // do not further process keycode
     } else {
-      sprintf(help_buf,"\n", keycode);
       return true; // do further processing
     }
+
 }
 
 #ifdef ENCODER_ENABLE
@@ -529,26 +473,67 @@ static void render_logo(void) {
 
 void oled_task_user(void) {
   char buf[21*4]; // 4 lines a 21 characters
-  /*
-    // Host Keyboard Layer Status
-    oled_write_P(PSTR("Layer: "), false);
-    
+  char help_buf[30];
+  uint8_t my_layer = 0;
+
     switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
-            oled_write_P(PSTR("Default\n"), false);
-            break;
-        case _FN:
-            oled_write_P(PSTR("FN\n"), false);
-            break;
-        case _ADJ:
-            oled_write_P(PSTR("ADJ\n"), false);
-            break;
+        case _ML:
+	  my_layer = _ML;
+          break;
+        case _FL:
+	  my_layer = _FL;
+          break;
         default:
-            // Or use the write_ln shortcut over adding '\n' to the end of your string
-            oled_write_ln_P(PSTR("Undefined"), false);
+	  my_layer = _BL;
     }
-  */
-  if (my_layer == _BL && my_mute == 0) {
+
+    /* set led backlight */
+    for (uint8_t m=0; m<MATRIX_ROWS; m++) {
+      for (uint8_t n=0; n<MATRIX_COLS; n++) {
+	if (keymaps[my_layer][m][n] == TT(_FL) || keymaps[my_layer][m][n] == TT(_ML)) {
+	  key_led[m*MATRIX_COLS+n] = 3; // g+r = yellow (to highlight function keys)
+	} else if (keymaps[my_layer][m][n] != _______) {
+          key_led[m*MATRIX_COLS+n] = 4; // b = blue
+	} else {
+          key_led[m*MATRIX_COLS+n] = 0;
+	}
+      }
+    }
+    
+    
+    /* show help text when key is pressed and MY_MUTE is active */
+    if (mute_key != 0 /* && overwrite_mute == 0*/) {
+      if (IS_ANY(last_keycode)) {
+	sprintf(help_buf,"%s\n", key_help[last_keycode]);
+      } else {
+	switch (last_keycode) {
+	  case AU_TOG:
+	    sprintf(help_buf,"AU_TOG\n");
+	    break;
+	  case DM_REC1:
+	    sprintf(help_buf,"DM_REC1\n");
+	    break;
+	  case DM_PLY1:
+	    sprintf(help_buf,"DM_PLY1\n");
+	    break;
+	  case DM_RSTP:
+	    sprintf(help_buf,"DM_RSTP\n");
+	    break;
+	  case MY_CAD:
+	    sprintf(help_buf,"Ctrl+Alt+Del\n");
+	    break;
+          default:
+	    sprintf(help_buf,"UNKWN (%04Xh)\n", last_keycode);
+	}
+	
+      }
+    } else {
+      sprintf(help_buf,"\n", last_keycode);
+    }
+
+
+    // write stuff to display
+  if (my_layer == _BL && mute_key == 0) {
     render_logo();
   } else {
     sprintf(buf,"\nLayer: %s\n%s", layer_help[my_layer], help_buf);
@@ -560,7 +545,7 @@ void oled_task_user(void) {
   led_t led_state = host_keyboard_led_state();
   oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
   oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
-  //oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+
 }
 
 
