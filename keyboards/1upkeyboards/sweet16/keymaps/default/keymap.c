@@ -369,27 +369,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     #else
         [_BL] = LAYOUT_ortho_4x4(
 		     KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12  ,          KC_PSCR, KC_PAUS, KC_END , KC_HELP,
-		     KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQUAL, KC_BSPC, RGB_TOG, KC_LNUM, KC_LSCR, AU_TOG ,
-                     TT(_FL), KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_LBRC , KC_RBRC, RGB_MOD, RGB_VAI, RGB_SAI, CK_TOGG,
-		     KC_LCTL, KC_LCTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOTE, KC_BSLS, RGB_HUD, RGB_M_P, RGB_HUI, MU_TOG ,
-		     KC_LSFT, KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT , KC_ENT , RGB_RMOD,RGB_VAD, RGB_SAD, MU_MOD ,
-		                         KC_LALT,                     KC_SPC ,                                             KC_RALT,                 KC_KP_0,          KC_DEL , AU_OFF 
+		     KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQUAL, KC_BSPC, _______, _______, _______, DM_REC1,
+                     TT(_FL), KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_LBRC , KC_RBRC, _______, KC_VOLU, _______, DM_REC2,
+		     KC_LCTL, KC_LCTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOTE, KC_BSLS, KC_LEFT, KC_MUTE, KC_RGHT, DM_PLY1,
+		     KC_LSFT, KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT , KC_ENT , _______, KC_VOLD, _______, DM_PLY2,
+		                         KC_LALT,                     KC_SPC ,                                             KC_RALT,                 KC_SPC ,          KC_DEL , DM_RSTP 
 			     ),
         [_FL] = LAYOUT_ortho_4x4(
-		     EEP_RST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,          _______, _______, _______, _______,
-		     KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12  , _______, _______, _______, _______, DM_REC1,
-                     _______, TT(_ML), MY_MUTE, KC_LGUI, _______, RESET  , _______, _______, KC_PGUP, KC_UP  , _______, _______,  _______, KC_DEL , _______, KC_VOLU, _______, DM_REC2,
-		     _______, KC_CAPS, _______, KC_SLEP, KC_DEL , _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END ,  KC_END , _______, KC_MPRV, KC_MPLY, KC_MNXT, DM_PLY1,
-		     _______, _______, _______, _______, MY_CAD , _______, _______, KC_PGDN, KC_PGDN, _______, _______, _______,  _______, _______, _______, KC_VOLD, _______, DM_PLY2,
-		                         _______,                     _______,                                             _______,                 KC_MUTE,          _______, DM_RSTP
+		     EEP_RST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ ,          _______, _______, _______, _______,
+		     KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12  , _______, _______, _______, _______, _______,
+                     _______, TT(_ML), MY_MUTE, KC_LGUI, _______, RESET  , _______, _______, KC_PGUP, KC_UP  , _______, _______, _______ , KC_DEL , _______, _______, _______, _______,
+		     _______, KC_CAPS, _______, KC_SLEP, KC_DEL , _______, _______, KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END , KC_END  , _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,
+		     _______, _______, _______, _______, MY_CAD , _______, _______, KC_PGDN, KC_PGDN, _______, _______, _______, _______ , _______, _______, _______, _______, _______,
+		                         _______,                     _______,                                             _______,                 KC_MUTE,          _______, _______
 			     ),
         [_ML] = LAYOUT_ortho_4x4(
-		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,          _______, _______, _______, _______,
-		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______,
-                     _______, _______, _______, _______, _______, _______, _______, _______, KC_WH_U, KC_MS_U, KC_WH_D, _______,  _______, _______, _______, _______, _______, _______,
-		     _______, _______, MY_MUTE, _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,  _______, _______, _______, _______, _______, _______,
-		     _______, _______, _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN3, KC_BTN2, _______,  _______, _______, _______, _______, _______, _______,
-		                         _______,                     KC_BTN1,                                             KC_BTN2,                 _______,          _______, _______
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ ,          _______, _______, _______, _______,
+		     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ , _______, RGB_TOG, KC_LNUM, KC_LSCR, AU_TOG ,
+                     _______, _______, _______, _______, _______, _______, _______, _______, KC_WH_U, KC_MS_U, KC_WH_D, _______, _______ , _______, RGB_MOD, RGB_VAI, RGB_SAI, CK_TOGG,
+		     _______, _______, MY_MUTE, _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______ , _______, RGB_HUD, RGB_M_P, RGB_HUI, MU_TOG ,
+		     _______, _______, _______, _______, _______, _______, _______, _______, KC_BTN1, KC_BTN3, KC_BTN2, _______, _______ , _______, RGB_RMOD,RGB_VAD, RGB_SAD, MU_MOD ,
+		                         _______,                     KC_BTN1,                                             KC_BTN2,                 _______,          _______, AU_OFF 
 			     )
     #endif
 #endif    
@@ -499,7 +499,15 @@ void oled_task_user(void) {
 	}
       }
     }
-    
+
+    /* 1st led blink to show alive */
+    // rgb must be on RGB_TOG and an rgb modus with animation must be active RGB_MOD!!!
+    static uint8_t blinky = 1;
+    key_led[0] = blinky;
+    blinky = blinky << 1;
+    if (blinky > 4) {
+      blinky = 1;
+    }
     
     /* show help text when key is pressed and MY_MUTE is active */
     if (mute_key != 0 /* && overwrite_mute == 0*/) {
@@ -507,6 +515,12 @@ void oled_task_user(void) {
 	sprintf(help_buf,"%s\n", key_help[last_keycode]);
       } else {
 	switch (last_keycode) {
+	  case RGB_TOG:
+	    sprintf(help_buf,"RGB_TOG\n");
+	    break;
+	  case RGB_MOD:
+	    sprintf(help_buf,"RGB_MOD\n");
+	    break;
 	  case AU_TOG:
 	    sprintf(help_buf,"AU_TOG\n");
 	    break;

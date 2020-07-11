@@ -487,6 +487,11 @@ void oled_write_raw_P(const char *data, uint16_t size) {
 }
 #endif  // defined(__AVR__)
 
+bool is_oled_active(void) {
+  return oled_active;
+}
+
+
 bool oled_on(void) {
 #if OLED_TIMEOUT > 0
     oled_timeout = timer_read32() + OLED_TIMEOUT;

@@ -328,15 +328,15 @@ void ws2812_setleds(LED_TYPE* ledarray, uint16_t leds) {
 		 )*I_DIGIT_IN_uA;
 #endif
       
-      if ((current < I_MAX_IN_uA_WITH_ERROR) && (oled_active == true)) { //_uA_WITH_ERROR) {
+      if ((current < I_MAX_IN_uA_WITH_ERROR) && (is_oled_active() == true)) { //_uA_WITH_ERROR) {
 #ifdef QMK_RGB	
 	frame_buf[i*3+0] = ledarray[i].g;
 	frame_buf[i*3+1] = ledarray[i].r;
 	frame_buf[i*3+2] = ledarray[i].b;
 #else
 	if (i < MATRIX_ROWS*MATRIX_COLS) {
-	  frame_buf[i*3+0] = (key_led[i] >> 0) & 0x01; // g
-	  frame_buf[i*3+1] = (key_led[i] >> 1) & 0x01; // r
+	  frame_buf[i*3+1] = (key_led[i] >> 0) & 0x01; // r
+	  frame_buf[i*3+0] = (key_led[i] >> 1) & 0x01; // g
 	  frame_buf[i*3+2] = (key_led[i] >> 2) & 0x01; // b
 	}
 #endif	

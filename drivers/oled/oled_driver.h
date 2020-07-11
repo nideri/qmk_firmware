@@ -19,8 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdint.h>
 #include <stdbool.h>
 
-extern bool oled_active;
-
 // an enumeration of the chips this driver supports
 #define OLED_IC_SSD1306 0
 #define OLED_IC_SH1106 1
@@ -233,6 +231,8 @@ void oled_write_raw_P(const char *data, uint16_t size);
 
 #    define oled_write_raw_P(data, size) oled_write_raw(data, size)
 #endif  // defined(__AVR__)
+
+bool is_oled_active(void);
 
 // Can be used to manually turn on the screen if it is off
 // Returns true if the screen was on or turns on
