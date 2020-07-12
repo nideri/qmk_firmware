@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
 
-uint8_t key_led[MATRIX_ROWS*MATRIX_COLS] = {0};
+volatile uint8_t key_led[MATRIX_ROWS*MATRIX_COLS] = {0};
 
 enum custom_keycodes {
 		      MY_MUTE = SAFE_RANGE, /* TODO: put MY_MUTE on base layer and make it transparent for all other layers */

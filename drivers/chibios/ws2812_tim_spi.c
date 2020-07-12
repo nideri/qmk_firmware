@@ -297,7 +297,7 @@ everyting is armed, start master timer
   return;
 }
 
-extern uint8_t key_led[MATRIX_ROWS*MATRIX_COLS];
+extern volatile uint8_t key_led[MATRIX_ROWS*MATRIX_COLS];
 
 void ws2812_setleds(LED_TYPE* ledarray, uint16_t leds) {
     static bool s_init = false;
@@ -327,8 +327,10 @@ void ws2812_setleds(LED_TYPE* ledarray, uint16_t leds) {
 		  +((key_led[i]>>2) & 0x01)
 		 )*I_DIGIT_IN_uA;
 #endif
-      
-      if ((current < I_MAX_IN_uA_WITH_ERROR) && (is_oled_active() == true)) { //_uA_WITH_ERROR) {
+
+      // always do led 0 ("alive led"), not sure why is_oled_active() == false is needed... otherwhise it won't work
+      // "main loop" might run faster when oled_active = false...
+      if (((i==0) && (is_oled_active() == false)) || ((current < I_MAX_IN_uA_WITH_ERROR) && (is_oled_active() == true))) { //_uA_WITH_ERROR) {
 #ifdef QMK_RGB	
 	frame_buf[i*3+0] = ledarray[i].g;
 	frame_buf[i*3+1] = ledarray[i].r;
